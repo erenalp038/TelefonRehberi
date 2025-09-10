@@ -23,7 +23,7 @@ jobs:
       run: nuget restore TelefonRehberi.sln
 
     - name: Build Xamarin Android project
-      run: msbuild TelefonRehberi/Android/TelefonRehberi.Android.csproj /p:Configuration=Release /t:SignAndroidPackage
+      run: msbuild TelefonRehberi/TelefonRehberi.Android.csproj /p:Configuration=Release /t:SignAndroidPackage
 
     - name: Upload APK
       uses: actions/upload-artifact@v3
