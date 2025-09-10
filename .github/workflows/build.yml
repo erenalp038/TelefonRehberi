@@ -1,0 +1,32 @@
+name: Build Xamarin Android APK
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Setup MSBuild
+      uses: microsoft/setup-msbuild@v1.1
+
+    - name: Setup NuGet
+      uses: NuGet/setup-nuget@v1.2.0
+
+    - name: Restore NuGet packages
+      run: nuget restore TelefonRehberi.sln
+
+    - name: Build Xamarin Android project
+      run: msbuild TelefonRehberi.Android/TelefonRehberi.Android.csproj /p:Configuration=Release /t:SignAndroidPackage
+
+    - name: Upload APK
+      uses: actions/upload-artifact@v3
+      with:
+        name: Android-APK
+        path: TelefonRehberi.Android/bin/Release/*.apk
